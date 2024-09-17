@@ -1,4 +1,5 @@
 pub mod coinm;
+pub mod margin;
 mod models;
 pub mod spot;
 pub mod usdm;
@@ -11,8 +12,6 @@ use crate::{
 use fehler::{throw, throws};
 use futures::{stream::Stream, SinkExt, StreamExt};
 use log::debug;
-pub use models::*;
-use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use serde_json::{from_str, value::RawValue};
 use std::{
@@ -76,8 +75,9 @@ where
             Product::UsdMFutures => &config.usdm_futures_ws_endpoint,
             Product::CoinMFutures => &config.coinm_futures_ws_endpoint,
             Product::EuropeanOptions => &config.european_options_ws_endpoint,
+            Product::PortfolioMargin => &config.portfolio_margin_ws_endpoint,
         };
-        let endpoint = Url::parse(&format!("{}/stream?streams={}", base, combined)).unwrap();
+        let endpoint = &format!("{}/stream?streams={}", base, combined);
         debug!("ws endpoint: {endpoint:?}");
         let (stream, _) = match connect_async(endpoint).await {
             Ok(v) => v,

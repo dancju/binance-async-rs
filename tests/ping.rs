@@ -9,6 +9,5 @@ async fn ping() {
 
     let binance = Binance::new();
     let resp = binance.request(spot::PingRequest {}).await?;
-    let resp = &*resp;
     println!("{resp:?}");
 }

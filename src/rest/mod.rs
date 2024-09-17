@@ -1,4 +1,5 @@
 pub mod coinm;
+pub mod margin;
 pub mod spot;
 pub mod usdm;
 
@@ -104,6 +105,7 @@ impl Binance {
             Product::UsdMFutures => &self.config.usdm_futures_rest_api_endpoint,
             Product::CoinMFutures => &self.config.coinm_futures_rest_api_endpoint,
             Product::EuropeanOptions => &self.config.european_options_rest_api_endpoint,
+            Product::PortfolioMargin => &self.config.portfolio_margin_rest_api_endpoint,
         };
         let url = format!("{base}{path}?{params}");
 

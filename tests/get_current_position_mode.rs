@@ -12,6 +12,5 @@ async fn get_current_position_mode() {
     let resp = binance
         .request(usdm::GetCurrentPositionModeRequest {})
         .await?;
-    let resp = &*resp;
     println!("{resp:?}");
 }

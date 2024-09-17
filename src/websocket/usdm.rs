@@ -1,6 +1,8 @@
-use super::AggregateTrade;
 use crate::{
-    error::BinanceError::{self, *},
+    error::BinanceError::{
+        self, EmptyUserDataStream, StreamNotImplemented, UnknownStream,
+        UserDataStreamEventNotImplemented,
+    },
     models::{ExecutionType, OrderStatus, OrderType, Product, Side, TimeInForce},
     parser::{string_or_decimal, string_or_decimal_opt},
     websocket::ParseMessage,
@@ -19,7 +21,7 @@ pub enum WebsocketMessage {
     UserAccountUpdate(AccountUpdate),
     UserDataStreamExpired,
     // Market Stream
-    AggregateTrade(AggregateTrade),
+    AggregateTrade(super::models::AggregateTrade),
     BookTicker(BookTicker),
     // Trade(TradeMessage),
     // Candlestick(CandelStickMessage),

@@ -14,7 +14,6 @@ async fn cancel_all_open_orders() {
             symbol: "BTCUSDT".into(),
         })
         .await?;
-    let resp = &*resp;
     println!("{resp:?}");
 }
 
@@ -30,6 +29,5 @@ async fn auto_cancel_all_open_orders() {
             countdown_time: 1000000,
         })
         .await?;
-    let resp = &*resp;
     println!("{resp:?}");
 }

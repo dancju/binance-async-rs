@@ -12,6 +12,9 @@ pub struct Config {
     pub european_options_rest_api_endpoint: String,
     pub european_options_ws_endpoint: String,
 
+    pub portfolio_margin_rest_api_endpoint: String,
+    pub portfolio_margin_ws_endpoint: String,
+
     pub recv_window: u64,
 }
 
@@ -29,6 +32,9 @@ impl Default for Config {
 
             european_options_rest_api_endpoint: "https://eapi.binance.com".into(),
             european_options_ws_endpoint: "wss://estream.binance.com".into(),
+
+            portfolio_margin_rest_api_endpoint: "https://papi.binance.com".into(),
+            portfolio_margin_ws_endpoint: "wss://fstream.binance.com/pm".into(),
 
             recv_window: 5000,
         }
