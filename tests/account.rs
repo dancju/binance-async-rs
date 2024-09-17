@@ -13,7 +13,6 @@ async fn get_account_spot() {
 
     let binance = Binance::with_key_and_secret(&var("BINANCE_KEY")?, &var("BINANCE_SECRET")?);
     let resp = binance.request(spot::GetAccountRequest {}).await?;
-    let resp = &*resp;
     println!("{resp:?}");
 }
 
@@ -26,6 +25,5 @@ async fn get_account_usdm() {
     let resp = binance
         .request(usdm::AccountInformationV2Request {})
         .await?;
-    let resp = &*resp;
     println!("{resp:?}");
 }

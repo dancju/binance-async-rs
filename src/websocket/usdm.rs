@@ -1,6 +1,8 @@
-use super::AggregateTrade;
 use crate::{
-    error::BinanceError::{self, *},
+    error::BinanceError::{
+        self, EmptyUserDataStream, StreamNotImplemented, UnknownStream,
+        UserDataStreamEventNotImplemented,
+    },
     models::{ExecutionType, OrderStatus, OrderType, Product, Side, TimeInForce},
     parser::{string_or_decimal, string_or_decimal_opt},
     websocket::ParseMessage,
@@ -19,7 +21,8 @@ pub enum WebsocketMessage {
     UserAccountUpdate(AccountUpdate),
     UserDataStreamExpired,
     // Market Stream
-    AggregateTrade(AggregateTrade),
+    AggregateTrade(super::models::AggregateTrade),
+    MarkPrice(MarkPrice),
     BookTicker(BookTicker),
     // Trade(TradeMessage),
     // Candlestick(CandelStickMessage),
@@ -39,7 +42,7 @@ impl ParseMessage for WebsocketMessage {
         if stream.ends_with("@aggTrade") {
             Self::AggregateTrade(from_str(data)?)
         } else if stream.contains("@markPrice") {
-            throw!(StreamNotImplemented(stream.into()))
+            Self::MarkPrice(from_str(data)?)
         } else if stream.starts_with("!markPrice@arr") {
             throw!(StreamNotImplemented(stream.into()))
         } else if stream.contains("@kline_") {
@@ -280,4 +283,23 @@ pub struct BookTicker {
 
     #[serde(rename = "A", with = "string_or_decimal")]
     pub best_ask_qty: Decimal,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct MarkPrice {
+    #[serde(rename = "E")]
+    pub event_time: u64,
+    #[serde(rename = "s")]
+    pub symbol: String,
+    #[serde(rename = "p", with = "string_or_decimal")]
+    pub mark_price: Decimal,
+    #[serde(rename = "i", with = "string_or_decimal")]
+    pub index_price: Decimal,
+    #[serde(rename = "P", with = "string_or_decimal")]
+    pub estimated_settle_price: Decimal,
+    #[serde(rename = "r", with = "string_or_decimal")]
+    pub funding_rate: Decimal,
+    #[serde(rename = "T")]
+    pub next_funding_time: u64,
 }

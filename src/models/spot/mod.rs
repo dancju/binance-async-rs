@@ -52,10 +52,6 @@ pub struct Bids {
     pub price: Decimal,
     #[serde(with = "string_or_decimal")]
     pub qty: Decimal,
-
-    // Never serialized.
-    #[serde(skip_serializing, rename = "ignore")]
-    _ignore: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -64,16 +60,6 @@ pub struct Asks {
     pub price: Decimal,
     #[serde(with = "string_or_decimal")]
     pub qty: Decimal,
-
-    // Never serialized.
-    #[serde(skip_serializing, rename = "ignore")]
-    _ignore: Vec<String>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-#[serde(rename_all = "camelCase")]
-pub struct UserDataStream {
-    pub listen_key: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

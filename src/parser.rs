@@ -55,7 +55,10 @@ pub mod string_or_decimal_opt {
     where
         D: Deserializer<'de>,
     {
-        Ok(Some(super::string_or_decimal::deserialize(deserializer)?))
+        match super::string_or_decimal::deserialize(deserializer) {
+            Err(_) => Ok(None),
+            Ok(v) => Ok(Some(v)),
+        }
     }
 }
 

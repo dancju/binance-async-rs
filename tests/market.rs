@@ -9,6 +9,5 @@ async fn exchange_information() {
 
     let binance = Binance::new();
     let resp = binance.request(usdm::ExchangeInformationRequest {}).await?;
-    let resp = &*resp;
     println!("{resp:?}");
 }

@@ -31,13 +31,13 @@ macro_rules! define_request {
         Response => { $($resp_def:tt)* };
     ) => {
         paste::paste! {
-            #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+            #[derive(Debug, Clone, Default, serde::Serialize)]
             #[serde(rename_all = "camelCase")]
             pub struct [<$name Request>] {
                 $($req_def)*
             }
 
-            #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+            #[derive(Debug, Clone, Default, serde::Deserialize)]
             #[serde(rename_all = "camelCase")]
             pub struct [<$name Response>] {
                 $($resp_def)*

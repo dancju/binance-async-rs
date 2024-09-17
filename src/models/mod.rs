@@ -12,6 +12,7 @@ pub enum Product {
     UsdMFutures,
     CoinMFutures,
     EuropeanOptions,
+    PortfolioMargin,
 }
 
 #[derive(Serialize, Deserialize, Default, Clone)]

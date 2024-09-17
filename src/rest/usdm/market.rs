@@ -32,6 +32,8 @@ pub struct Symbol {
     pub status: String,
     pub base_asset: String,
     pub quote_asset: String,
+    pub margin_asset: String,
+    pub delivery_date: u64,
     pub filters: Vec<Filter>,
 }
 
