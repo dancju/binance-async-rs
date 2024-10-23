@@ -3,6 +3,7 @@ use crate::{
     models::{spot::OrderBook, Product},
 };
 use reqwest::Method;
+use rust_decimal::Decimal;
 
 define_request! {
     Name => Ping;
@@ -12,6 +13,21 @@ define_request! {
     Signed => false;
     Request => {};
     Response => {};
+}
+
+define_request! {
+    Name => GetSymbolPrice;
+    Product => Product::Spot;
+    Method => Method::GET;
+    Endpoint => "/api/v3/ticker/price";
+    Signed => false;
+    Request => {
+        pub symbol: String,
+    };
+    Response => {
+        pub symbol: String,
+        pub price: Decimal,
+    };
 }
 
 define_request! {
